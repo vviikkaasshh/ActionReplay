@@ -9,19 +9,25 @@ namespace SimpleRetry
   {
     private static HttpClient _client;
 
-    public static void GetClient()
+    public static HttpClient GetClient()
     {
-      _client = new HttpClient();
+      if (null == _client)
+        _client = new HttpClient();
+      return _client;
     }
 
-    public static void GetInstance(TimeSpan connectionIdleTimeout, TimeSpan connectionLifetime)
+    public static HttpClient GetInstance(TimeSpan connectionIdleTimeout, TimeSpan connectionLifetime)
     {
-      SocketsHttpHandler socketsHttpHandler = new SocketsHttpHandler()
+      if (null == _client)
       {
-        PooledConnectionIdleTimeout = connectionIdleTimeout,
-        PooledConnectionLifetime = connectionLifetime
-      };
-      _client = new HttpClient(socketsHttpHandler);
+        SocketsHttpHandler socketsHttpHandler = new SocketsHttpHandler()
+        {
+          PooledConnectionIdleTimeout = connectionIdleTimeout,
+          PooledConnectionLifetime = connectionLifetime
+        };
+        _client = new HttpClient(socketsHttpHandler);
+      }
+      return _client;
     }
   }
 }
