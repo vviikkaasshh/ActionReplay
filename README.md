@@ -9,4 +9,5 @@
 * Helps in system where number of threads need to be used carefully.
 * Avoid pitfalls for C# Parallel.forEach which uses Thread Pool threads and starve even in case of max specified parallelism
 * Will add more functionality like segragation for IO bound and CPU bound operations( Currently best suited for CPU bound)
+* Works with messaging systems like RMQ, MSMQ, etc.
 
